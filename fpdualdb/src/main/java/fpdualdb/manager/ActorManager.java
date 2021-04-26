@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -57,51 +58,55 @@ public class ActorManager {
 		}
 	}
 
-	public void createActor(Connection con, Date date) {
+	public void createActor(Connection con, int id, String firstName, String lastName, Date date) {
 
-		Scanner sc = new Scanner(System.in);
-
-		System.out.println("Inserte [id] de su nuevo actor: ");
-		int id = sc.nextInt();
-
-		System.out.println("Inserte [first_name] de su nuevo actor: ");
-		String firstName = sc.next();
-
-		System.out.println("Inserte [last_name] de su nuevo actor: ");
-		String lastName = sc.next();
-		sc.close();
-		try(PreparedStatement prepStmt = con.prepareStatement("INSERT INTO Actor VALUES ("+id+","+firstName+","+lastName+"?)")){
+		try (PreparedStatement prepStmt = con
+				.prepareStatement("INSERT INTO Actor VALUES (?, ?, ?, ?)")) {
 			con.setAutoCommit(false);
-			prepStmt.setDate(1, date);
-			
+			prepStmt.setInt(1, id);
+			prepStmt.setString(2, firstName);
+			prepStmt.setString(3, lastName);
+			prepStmt.setDate(4, date);
+
 			prepStmt.executeUpdate();
-			
+
 			con.commit();
-			
+
 		} catch (SQLException e) {
-			
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 		}
 
 	}
 
 	public void modifyActor(Connection con, int id, String firstName, String lastName, Date date, int idWhere) {
-		try(PreparedStatement prepStmt = con.prepareStatement("UPDATE Actor SET actor_id = ?, first_name = ?, last_name = ?, last_update ? WHERE actor_id ?")) {
+		try (PreparedStatement prepStmt = con.prepareStatement(
+				"UPDATE Actor SET actor_id = ?, first_name = ?, last_name = ?,last_update = ? where actor_id=?")) {
 			con.setAutoCommit(false);
 			prepStmt.setInt(1, id);
 			prepStmt.setString(2, firstName);
 			prepStmt.setString(3, lastName);
 			prepStmt.setDate(4, date);
 			prepStmt.setInt(5, idWhere);
-			
+
 			prepStmt.executeUpdate();
-			
+
 			con.commit();
 		} catch (SQLException e) {
-			
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 		}
 	}
+
 	public void deleteActor(Connection con, int prefix) {
 		try (PreparedStatement prepStmt = con.prepareStatement("DELETE FROM Actor WHERE actor_id = ?")) {
 			con.setAutoCommit(false);

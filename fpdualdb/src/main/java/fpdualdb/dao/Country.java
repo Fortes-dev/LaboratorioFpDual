@@ -2,6 +2,7 @@ package fpdualdb.dao;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,13 +13,13 @@ import lombok.ToString;
 @ToString
 public class Country {
 	int id;
-	String country;
+	String countryName;
 	Date lastUpdate;
 
 	public Country(ResultSet result) {
 		try {
 			this.id = result.getInt("country_id");
-			this.country = result.getString("country");
+			this.countryName = result.getString("country");
 			this.lastUpdate = result.getDate("last_update");
 		} catch (SQLException e) {
 			

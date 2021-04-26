@@ -12,13 +12,13 @@ import lombok.ToString;
 @ToString
 public class Language {
 	int id;
-	String language;
+	String name;
 	Date lastUpdate;
 	
 	public Language(ResultSet result) {
 		try {
 			this.id = result.getInt("language_id");
-			this.language = result.getString("name");
+			this.name = result.getString("name");
 			this.lastUpdate = result.getDate("last_update");
 		} catch (SQLException e) {
 			e.printStackTrace();
