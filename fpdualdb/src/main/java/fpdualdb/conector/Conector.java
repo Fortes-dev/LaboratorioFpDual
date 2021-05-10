@@ -1,6 +1,8 @@
 package fpdualdb.conector;
 
 import java.io.IOException;
+import lombok.Getter;
+import lombok.Setter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -8,6 +10,8 @@ import java.util.Properties;
 
 
 public class Conector {
+	@Setter
+	@Getter
 	Properties prop = new Properties();
 
 	public Conector() {
@@ -17,7 +21,7 @@ public class Conector {
 			e.printStackTrace();
 		}
 	}
-	public Connection getMySQLConnection() {
+	public Connection getMySQLConnection()throws ClassNotFoundException, SQLException {
 		try {
 
 			// Indicates which driver is going to be used.

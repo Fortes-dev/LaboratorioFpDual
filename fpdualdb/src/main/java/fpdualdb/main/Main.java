@@ -13,25 +13,25 @@ import fpdualdb.manager.CountryManager;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		Connection con = new Conector().getMySQLConnection();
 		try {
 			Timestamp ts=new Timestamp(System.currentTimeMillis());
 			Date time = new Date(ts.getTime());
 			
 			
-			/* Funciones ActorManager 
+			//Funciones ActorManager 
 //Lista completa
 			new ActorManager().findAll(con).forEach(actor -> System.out.println(actor));
 //Lista por Id
-			new ActorManager().findAllById(con).forEach(actor -> System.out.println(actor));
+			//new ActorManager().findAllById(con).forEach(actor -> System.out.println(actor));
 //Crear actor
-			new ActorManager().createActor(con, 600,  "CARLOS", "PEREZ", time);
-			*/
+			//new ActorManager().createActor(con, 600,  "CARLOS", "PEREZ", time);
+			
 //Modificar actor
 			//new ActorManager().modifyActor(con, 550, "PEPITO", "PEREZ", time, 600);
 //Delete actor
-			new ActorManager().deleteActor(con, 3);
+			//new ActorManager().deleteActor(con, 3);
 
 			/* Funciones CategoryManager 
 //Lista completa
